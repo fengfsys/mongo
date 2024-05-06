@@ -1,0 +1,40 @@
+{
+  "network_name": "MyNetwork",
+  "location": "Data Center A",
+  "routers": [
+    {
+      "router_id": 1,
+      "name": "Router1",
+      "ip_address": "192.168.1.1",
+      "subnet_mask": "255.255.255.0",
+      "interfaces": [
+        {
+          "interface_id": 1,
+          "name": "eth0",
+          "mac_address": "00:11:22:33:44:55",
+          "status": "up"
+        },
+        {
+          "interface_id": 2,
+          "name": "eth1",
+          "mac_address": "00:11:22:33:44:56",
+          "status": "down"
+        }
+      ]
+    },
+    {
+      "router_id": 2,
+      "name": "Router2",
+      "ip_address": "192.168.2.1",
+      "subnet_mask": "255.255.255.0",
+      "interfaces": [
+        {
+          "interface_id": 1,
+          "name": "eth0",
+          "mac_address": "00:11:22:33:44:57",
+          "status": "up"
+        }
+      ]
+    }
+  ]
+}
