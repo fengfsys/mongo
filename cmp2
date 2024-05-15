@@ -1,0 +1,31 @@
+import json
+
+# Read document 1 from file
+with open('doc1.json', 'r') as file:
+    doc1_list = json.load(file)
+
+# Read document 2 from file
+with open('doc2.json', 'r') as file:
+    doc2_list = json.load(file)
+
+# Ensure both lists have the same length
+if len(doc1_list) != len(doc2_list):
+    print("The two document lists have different lengths and cannot be compared.")
+else:
+    for index, (doc1_dict, doc2_dict) in enumerate(zip(doc1_list, doc2_list)):
+        # Find the keys that are different between the two documents
+        all_keys = set(doc1_dict.keys()) | set(doc2_dict.keys())
+
+        # Find the keys that have different values between the two documents
+        diff_keys = {key for key in all_keys if doc1_dict.get(key) != doc2_dict.get(key)}
+
+        # Find the differing values for the differing keys
+        diff_values = {key: (doc1_dict.get(key), doc2_dict.get(key)) for key in diff_keys}
+
+        # Print the differing keys and values for each pair of documents
+        if diff_values:
+            print(f"Differences in document pair at index {index}:")
+            for key, value in diff_values.items():
+                print(f"  Difference in key '{key}': {value[0]} (Document 1) vs {value[1]} (Document 2)")
+        else:
+            print(f"No differences in document pair at index {index}.")
