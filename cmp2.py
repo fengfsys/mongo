@@ -1,3 +1,4 @@
+import argparse
 import json
 
 def load_json_file(file_path):
@@ -11,22 +12,31 @@ def compare_json_files(file1_path, file2_path):
     data1 = load_json_file(file1_path)
     data2 = load_json_file(file2_path)
     
-    # Find differences in keys and values
-    for key in data1.keys():
-        if key not in data2 or data1[key] != data2[key]:
-            print(f"Difference found at key: {key}")
-            print(f"File 1 Value: {data1.get(key)}")
-            print(f"File 2 Value: {data2.get(key, 'Key not found in second file.')}")
-            print()
-    # Check for keys present in the second file but not in the first
-    for key in data2.keys():
+    # Compare dictionaries
+    for key in set(data1.keys()).union(data2.keys()):
         if key not in data1:
             print(f"Key '{key}' is present only in the second file.")
-            print(f"Value: {data2.get(key)}")
-            print()
+            print(f"Value: {data2[key]}")
+        elif key not in data2:
+            print(f"Key '{key}' is present only in the first file.")
+            print(f"Value: {data1[key]}")
+        elif data1[key] != data2[key]:
+            print(f"Difference found at key: {key}")
+            print(f"File 1 Value: {data1[key]}")
+            print(f"File 2 Value: {data2[key]}")
+        print()
 
-# Provide the paths to your two JSON files
-file1_path = 'file1.json'
-file2_path = 'file2.json'
+def main():
+    # Create argument parser
+    parser = argparse.ArgumentParser(description="Compare two JSON files and print differences.")
+    parser.add_argument("file1", help="Path to the first JSON file.")
+    parser.add_argument("file2", help="Path to the second JSON file.")
+    
+    # Parse arguments
+    args = parser.parse_args()
+    
+    # Call the comparison function with the provided file paths
+    compare_json_files(args.file1, args.file2)
 
-compare_json_files(file1_path, file2_path)
+if __name__ == "__main__":
+    main()
